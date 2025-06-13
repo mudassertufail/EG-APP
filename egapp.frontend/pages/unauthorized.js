@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-// This component should be the default export in `unauthorized.js`
 export default function Unauthorized() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">

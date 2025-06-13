@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "EGApp API", // Updated title to match project name
+        Title = "EGApp API",
         Version = "v1",
         Description = "An ASP.NET Core Web API for the EGApp project."
     });

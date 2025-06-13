@@ -52,7 +52,6 @@ export default function Users() {
     }
   };
 
-  // Handle form submission for Add/Update User
   const handleSaveUser = async (e) => {
     e.preventDefault();
     setError("");
@@ -63,7 +62,6 @@ export default function Users() {
       return;
     }
 
-    // Client-side validation for form
     if (!formUsername || !formEmail || !formRole) {
       setError("Username, Email, and Role are required.");
       return;
@@ -81,8 +79,7 @@ export default function Users() {
 
     let response;
     if (editingUserId) {
-      // Update User (PUT)
-      userData.id = editingUserId; // Include ID for PUT
+      userData.id = editingUserId;
       response = await fetch(`${API_BASE_URL}/${editingUserId}`, {
         method: "PUT",
         headers: {
@@ -92,7 +89,6 @@ export default function Users() {
         body: JSON.stringify(userData),
       });
     } else {
-      // Create New User (POST)
       if (!formPassword || formPassword.length < 6) {
         setError(
           "Password is required and must be at least 6 characters long for new users."
@@ -103,7 +99,7 @@ export default function Users() {
         setError("Passwords do not match.");
         return;
       }
-      userData.password = formPassword; // This 'password' field is for the DTO
+      userData.password = formPassword;
       response = await fetch(API_BASE_URL, {
         method: "POST",
         headers: {
@@ -118,7 +114,6 @@ export default function Users() {
       const errorText = await response.text();
       try {
         const errorData = JSON.parse(errorText);
-        // Backend might return different error structures, try to parse
         setError(
           errorData.message ||
             errorData.detail ||
@@ -134,12 +129,11 @@ export default function Users() {
           ? "User updated successfully!"
           : "User created successfully!"
       );
-      resetForm(); // Clear form fields
-      fetchUsers(); // Refresh the list
+      resetForm();
+      fetchUsers();
     }
   };
 
-  // Handle Delete User
   const handleDeleteUser = async (id) => {
     setError("");
     setSuccess("");
@@ -149,7 +143,6 @@ export default function Users() {
       return;
     }
 
-    // Confirmation dialog
     if (
       !window.confirm(
         "Are you sure you want to delete this user? This action cannot be undone."
@@ -174,7 +167,7 @@ export default function Users() {
         else setError(`Failed to delete user: ${response.statusText}`);
       } else {
         setSuccess("User deleted successfully!");
-        fetchUsers(); // Refresh list after deletion
+        fetchUsers();
       }
     } catch (err) {
       console.error("Error deleting user:", err);
@@ -182,45 +175,38 @@ export default function Users() {
     }
   };
 
-  // Populate form fields when 'Edit' button is clicked
   const handleEditClick = (userToEdit) => {
     setEditingUserId(userToEdit.id);
     setFormUsername(userToEdit.username);
     setFormEmail(userToEdit.email);
     setFormRole(userToEdit.role);
-    setFormPassword(""); // Passwords are not directly edited via this form
+    setFormPassword("");
     setFormConfirmPassword("");
     setSuccess("");
     setError("");
   };
 
-  // Reset form fields and editing state
   const resetForm = () => {
     setEditingUserId(null);
     setFormUsername("");
     setFormEmail("");
     setFormPassword("");
     setFormConfirmPassword("");
-    setFormRole("User"); // Reset default role
+    setFormRole("User");
     setError("");
     setSuccess("");
   };
 
-  // Fetch users when the component mounts or user/roles change
   useEffect(() => {
     if (user && hasRole(["Admin"])) {
       fetchUsers();
     } else if (user && !hasRole(["Admin"])) {
-      // User is logged in but not an Admin, show access denied
       setError("You do not have administrative privileges to view this page.");
       setLoading(false);
     }
-  }, [user, hasRole]); // Dependencies: user object and hasRole function
+  }, [user, hasRole]);
 
-  // If user is not admin, display unauthorized message
   if (!hasRole(["Admin"])) {
-    // This AuthGuard ensures that if roles are not met, it will redirect.
-    // The outer div is just a fallback display in case of immediate render before redirect.
     return (
       <AuthGuard roles={["Admin"]}>
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
@@ -295,7 +281,7 @@ export default function Users() {
                 required
               />
             </div>
-            {!editingUserId && ( // Only show password fields for new user creation
+            {!editingUserId && (
               <>
                 <div>
                   <label
@@ -310,7 +296,7 @@ export default function Users() {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     value={formPassword}
                     onChange={(e) => setFormPassword(e.target.value)}
-                    required={!editingUserId} // Required only for new users
+                    required={!editingUserId}
                   />
                 </div>
                 <div>
@@ -326,7 +312,7 @@ export default function Users() {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     value={formConfirmPassword}
                     onChange={(e) => setFormConfirmPassword(e.target.value)}
-                    required={!editingUserId} // Required only for new users
+                    required={!editingUserId}
                   />
                 </div>
               </>
@@ -369,7 +355,6 @@ export default function Users() {
           </form>
         </div>
 
-        {/* User List */}
         <h2 className="text-2xl font-semibold text-blue-600 mb-4">
           Existing Users
         </h2>

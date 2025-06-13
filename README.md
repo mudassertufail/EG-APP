@@ -18,7 +18,7 @@ This guide walks you through setting up and running the backend API, including i
 
   # .NET SDK (version 9.0.0)
 
-  # Docker Desktop (or Docker Engine for Linux)
+  # Docker Desktop
 
 1.  Database Setup: SQL Server with Docker
     I use a Docker image for the SQL Server database.
