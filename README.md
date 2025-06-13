@@ -35,6 +35,8 @@ This guide walks you through setting up and running the backend API, including i
 
          docker run -d --name egapp_sql_server -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=my_strong_password' -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
 
+         Also update the password in the ConnectionStrings in the appsettings.json file
+
 2.  Backend Application Dependencies & Database Migration
     Navigate into the EGApp.Backend project directory in your terminal:
 
