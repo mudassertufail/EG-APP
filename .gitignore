@@ -1,0 +1,45 @@
+# Visual Studio Code
+.vscode/
+
+# Visual Studio for Mac (if used)
+.vs/
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+
+# NuGet packages
+*.nupkg
+.nuget/
+packages/
+Migrations/
+# ASP.NET Core
+appsettings.Development.json # If you have sensitive dev settings not meant for repo
+appsettings.Production.json # If you have sensitive prod settings not meant for repo
+Properties/launchSettings.json # Often local specific, but useful to keep in source for team consistency (optional to ignore)
+.vs/
+wwwroot/lib/ # If you're using client-side libraries that get restored (e.g., LibMan)
+
+# General ignore files
+*.user
+*.suo
+*.pdb
+*.opendb
+*.log
+*.vspscc
+*.vssscc
+*.bak
+*.scc
+
+# Operating System files
+.DS_Store
+.localized
+Thumbs.db
+
+# Rider IDE files (if using JetBrains Rider)
+.idea/
+*.csproj.DotSettings
+*.sln.DotSettings
+
+# Docker files
+docker-compose.override.yml # If you have local overrides for Docker Compose
